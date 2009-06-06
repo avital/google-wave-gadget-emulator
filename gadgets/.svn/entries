@@ -1,49 +1,0 @@
-8
-
-dir
-20
-http://google-wave-resources.googlecode.com/svn/trunk/samples/extensions/gadgets
-http://google-wave-resources.googlecode.com/svn
-
-
-
-2009-05-28T21:12:33.208341Z
-20
-austin.chau
-
-
-svn:special svn:externals svn:needs-lock
-
-
-
-
-
-
-
-
-
-
-
-99de6746-39ed-11de-b310-9106b1f7c239
-
-whereareyou
-dir
-
-fridge
-dir
-
-ratings
-dir
-
-bidder
-dir
-
-sudoku
-dir
-
-longitude
-dir
-
-votemythread
-dir
-
