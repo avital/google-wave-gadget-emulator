@@ -19,6 +19,17 @@ getJSON = function(url, callback) {
 emulator = {
   rpc: {},
   
+  sendParticipants: function() {
+    var ob = {myId: 0, authorId: 0, participants: [{
+      myId: 0,
+      id: 0,
+      displayName: 'test',
+      thumbnailUrl: 'http://gadget-doc-examples.googlecode.com/svn/trunk/images/unknown.gif'
+    }]}
+    
+    this.rpc['wave_participants'](ob)
+  },
+
   saveDelta: function(delta) {
     getJSON('db/' + docId, function(state) {
       if (state.error)
@@ -37,7 +48,7 @@ emulator = {
         method: 'PUT',
         data: JSON.encode(state),
         onFailure: function() {
-          this.saveDelta(delta)
+          emulator.saveDelta(delta)
         },
         onSuccess: function() {
           checkState()
@@ -68,6 +79,7 @@ gadgets.rpc = {
   
   call: function(arg1, cmd, arg2, params) {
     if (cmd == 'wave_enable') {
+      emulator.sendParticipants()
       checkState()
     }
     else if (cmd == 'wave_gadget_state') {
