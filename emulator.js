@@ -1,10 +1,20 @@
 docId = null
 
-getJSON = function(url, callback) {
+getJSON = function(url, callback, fullCallback) {
   new Request.JSON({
     url: url,
     method: 'get',
-    onSuccess: callback,
+    onSuccess: function(obj) {
+      if (fullCallback)
+        fullCallback(obj)
+
+      if (callback) {
+        var rev = obj._rev
+        delete obj._rev
+        delete obj._id
+        callback(obj, rev)
+      }
+    },
     onFailure: function() {
       new Request.JSON({
         url: 'db/' + docId,
@@ -31,7 +41,7 @@ emulator = {
   },
 
   saveDelta: function(delta) {
-    getJSON('db/' + docId, function(state) {
+    getJSON('db/' + docId, null /* we need only the full state */, function(state) {
       if (state.error)
         state = {}
  
@@ -88,10 +98,13 @@ gadgets.rpc = {
   }
 }
 
+lastRev = null;
+
 checkState = function() {
   if (docId) {
-    getJSON('db/' + docId, function(state) {
-      if (!wave.getState() || state._rev != wave.getState().state_._rev) {
+    getJSON('db/' + docId, function(state, rev) {
+      if (rev != lastRev) {
+        lastRev = rev
         wave.receiveState_(state)
       }
     })
