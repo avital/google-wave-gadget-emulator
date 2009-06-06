@@ -1,0 +1,8 @@
+<extension location="Toolbar">
+  <info id="where-are-you-gadget"
+        text="Where Are You?"
+        description="Insert the Where Are You? gadget."
+        imageUrl="http://wave-api-dmo.appspot.com/public/simplemap/whereicon.png"/>
+      <insertGadget
+        url="http://wave-api-dmo.appspot.com/public/simplemap/participantmap.xml"/>
+</extension>

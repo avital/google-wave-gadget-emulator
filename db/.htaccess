@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteRule ^(.*)$ http://jem.thewe.net:5984/wave/$1 [P]
+
+

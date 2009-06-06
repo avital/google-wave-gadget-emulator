@@ -1,0 +1,78 @@
+<Module>
+  <ModulePrefs title="Longitude" height="400">
+    <Require feature="rpc"/>
+  </ModulePrefs>
+
+  <Content type="html">
+  <![CDATA[
+  <script type="text/javascript"
+      src="http://wave-api.appspot.com/public/wave.js"></script>
+  <script src="http://www.google.com/jsapi?key=ABQIAAAABTdKqcsWHn1oIprbXmem8hQArRFY8cgiG2bGRwWZRr-44mND5BRc0xO_7ib3ci26dw1ByWnXurVceg" type="text/javascript"></script>
+  <script type="text/javascript">
+    google.load("maps", "2.x");
+  </script>
+  <script language="JavaScript" src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script>
+  <script type="text/javascript"
+          src="http://wave-api-dmo.appspot.com/public/longitude/popupmarker.js"></script>
+  <script type="text/javascript">
+
+    var map;
+    function renderState() {
+      if (!wave.getState() || !wave.getViewer()) {
+        return;
+      }
+      var lat = 35.681382;
+      var lng = 139.766084;
+      if (google.loader.ClientLocation) {
+        lat = google.loader.ClientLocation.latitude;
+        lng = google.loader.ClientLocation.longitude;
+      } else {
+        lat = geoplugin_latitude();
+        lng = geoplugin_longitude();
+      }
+      var state = wave.getState();
+      var viewerId = wave.getViewer().getId();
+      var loc = lat + '|' + lng;
+      var old_loc = state.get(viewerId);
+      if (loc != old_loc) {
+        var d = {};
+        d[viewerId] = loc;
+        state.submitDelta(d);
+        return;
+      }
+      map.clearOverlays();
+      var participants = wave.getParticipants();
+      for (var i = 0; i < participants.length; ++i) {
+        var p = participants[i];
+        var ploc = state.get(p.getId());
+        if (ploc) {
+          var Icon = new GIcon();
+          Icon.image = 'http://wave-devel.corp.google.com' + p.getThumbnailUrl();
+          Icon.iconSize = new GSize(32, 32);
+          Icon.iconAnchor = new GPoint(16, 16);
+          var opts = {text : p.getDisplayName(), icon:Icon};
+          ploc = ploc.split('|');
+          lat = parseFloat(ploc[0]);
+          lng = parseFloat(ploc[1]);
+          var marker = new PopupMarker(new GLatLng(lat, lng), opts);
+          map.addOverlay(marker);
+        }
+      }
+    }
+
+    function main() {
+      if (GBrowserIsCompatible()) {
+        map = new GMap2(document.getElementById("map_canvas"));
+        map.setCenter(new GLatLng(35.681382, 139.766084), 1);
+      }
+      if (wave && wave.isInWaveContainer()) {
+        wave.setStateCallback(renderState);
+        wave.setParticipantCallback(renderState);
+      }
+    }
+    gadgets.util.registerOnLoadHandler(main);
+  </script>
+  <div id="map_canvas" style="width: 100%; height: 100%"></div>
+]]>
+</Content>
+</Module>

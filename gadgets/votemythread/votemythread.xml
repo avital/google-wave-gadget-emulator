@@ -1,0 +1,119 @@
+<Module>
+  <ModulePrefs title="Thread Voter Thingy" height="200">
+   <Require feature="rpc"/>
+   <Require feature="dynamic-height"/>
+  </ModulePrefs>
+
+  <Content type="html">
+  <![CDATA[
+  <style type="text/css">
+    body, table { 
+      font: 13px arial;   
+    }
+    .votersDesc {
+      font-weight: bold;
+    }
+  </style>
+  <script type="text/javascript"
+      src="http://wave-api.appspot.com/public/wave.js"></script>
+  <script type="text/javascript"
+      src="http://www.google.com/jsapi"></script>
+  <script type="text/javascript">
+    google.load("jquery", "1.3.2");
+  </script>
+  <script type="text/javascript">
+    
+    function voteYes() {
+      
+      var lastVote = getViewerVote();
+      setViewerVote('YES');
+     
+    }
+    
+    function voteNo() {
+      var lastVote = getViewerVote();
+      setViewerVote('NO');
+    }
+    
+    function getViewerVote() {
+      var key = "vote-" + wave.getViewer().getId();
+      return wave.getState().get(key, 'NONE');
+    }
+    
+    function setViewerVote(vote) {
+      var key = "vote-" + wave.getViewer().getId();
+      var data = {};
+      data[key] = vote;
+      wave.getState().submitDelta(data);
+    }
+    
+    function renderInfo() {
+      var lastVote = getViewerVote();
+      if(lastVote == 'YES') {
+        $("#voteYes").attr("disabled", "disabled");
+        $("#voteNo").removeAttr("disabled");
+      } else if(lastVote == 'NO') {
+        $("#voteNo").attr("disabled", "disabled");
+        $("#voteYes").removeAttr("disabled");
+      }
+      
+      
+      //draw participant history
+      var participants = wave.getParticipants();
+      
+      var voters = { 'YES' : [], 'NO': [], 'NONE': [] }
+
+      if(participants) {
+        for(var i = 0; i < participants.length; i++) {
+          var key = "vote-" + participants[i].getId();
+          var name = participants[i].getDisplayName();
+          var vote = wave.getState().get(key, 'NONE');
+          voters[vote].push(name);
+        }
+      }
+      
+      $("#yesVoters").show();
+      $("#noVoters").show();
+      $("#notVoters").show();
+      
+      $("#yesVotersList").html(voters['YES'].join(', '));
+      $("#noVotersList").html(voters['NO'].join(', '));
+      $("#notVotersList").html(voters['NONE'].join(', '));
+      
+      $("#yesCount").html(voters['YES'].length);
+      $("#noCount").html(voters['NO'].length);
+      
+      if(voters['YES'].length === 0) { $("#yesVoters").hide(); }
+      if(voters['NO'].length === 0) { $("#noVoters").hide(); }
+      if(voters['NONE'].length === 0) { $("#notVoters").hide(); }
+      
+      gadgets.window.adjustHeight($("#wrapper").height() + 30);
+    }
+    
+    function main() {
+      if (wave && wave.isInWaveContainer()) {
+        wave.setStateCallback(renderInfo);
+        wave.setParticipantCallback(renderInfo);
+      }
+    }
+    gadgets.util.registerOnLoadHandler(main);
+  </script>
+  <div id="wrapper">
+  <p>
+  <strong>Do you agree?</strong>
+  <button id="voteYes" onclick="voteYes()">Yes!</button>
+  <button id="voteNo" onclick="voteNo()">No!</button>
+  </p>
+
+  <div id="voteLog">
+    <p id="yesVoters"><span class="votersDesc">Voted Yes (<span id="yesCount"></span>): </span>
+    <span id="yesVotersList"/></p>
+    <p id="noVoters"><span class="votersDesc">Voted No (<span id="noCount"></span>): </span>
+    <span id="noVotersList"/></p>
+    <p id="notVoters"><span class="votersDesc">Not Voted: </span>
+    <span id="notVotersList"/></p> 
+  </div>
+  </div>
+  ]]>
+  </Content>
+</Module>

@@ -1,0 +1,78 @@
+<Module>
+  <ModulePrefs title="Wave Rating" height="300">
+    <Require feature="rpc"/>
+  </ModulePrefs>
+<Content type="html">
+  <![CDATA[
+  <script type="text/javascript"
+      src="http://wave-api.appspot.com/public/wave.js">
+  </script>
+  <script type="text/javascript"
+      src="http://pesta.appspot.com/gadgets/ratings/ratings.js">
+  </script>	
+  <p id="rating_panel" style="font-size:small;text-align:center;">
+  <b>How do you rate it?</b> <br><br>
+  <table border="0" cellspacing="1" cellpadding="2" align="center">
+    <tr>
+      <td align="left" width="70">
+        <img src="http://pesta.appspot.com/gadgets/ratings/rate_stars_left.gif" /><img id="star1" src="http://pesta.appspot.com/gadgets/ratings/rate_star_off.gif" onclick="setStars(1)" onmouseover="showStars(1)" onmouseout="showStars()" /><img id="star2" src="http://pesta.appspot.com/gadgets/ratings/rate_star_off.gif" onclick="setStars(2)" onmouseover="showStars(2)" onmouseout="showStars()" /><img id="star3" src="http://pesta.appspot.com/gadgets/ratings/rate_star_off.gif" onclick="setStars(3)" onmouseover="showStars(3)" onmouseout="showStars()" /><img id="star4" src="http://pesta.appspot.com/gadgets/ratings/rate_star_off.gif" onclick="setStars(4)" onmouseover="showStars(4)" onmouseout="showStars()" /><img id="star5" src="http://pesta.appspot.com/gadgets/ratings/rate_star_off.gif" onclick="setStars(5)" onmouseover="showStars(5)" onmouseout="showStars()" /><img src="http://pesta.appspot.com/gadgets/ratings/rate_stars_right.gif" />
+      </td>
+      <td align="left" width="100"><span id="star_name" style="font-size:small;" ></span>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2"><span id="error_msg" style="font-size:small;"></span>
+      </td>
+    </tr>
+  </table>
+  </p>
+  <br>
+  <div style="display:block; text-align:center; padding-bottom: 5px; font-size:small">
+    <b><span id="total_votes"></span> Entries</b>
+  </div>
+  <table border="0" cellspacing="1" cellpadding="0" align="center">
+  <tr>
+    <td align="left" style="padding-right:0.5em;padding-bottom:1px;white-space:nowrap;font-size:small;">
+      5 star:
+    </td>
+    <td id="td5" style="min-width:60;" width="60" align="left" bgcolor="#E8E8E8" title="">
+      <div id="div5" style="background-color:#FFCC33; height:13px; width:0%;"><span id="five_star_percentage" style="font-size:x-small;"></span></div></td>
+    <td align="right">&nbsp;<span id="five_star" style="font-size:small;"></span></td>
+  </tr>
+  <tr>
+    <td align="left" style="padding-right:0.5em;padding-bottom:1px;white-space:nowrap;font-size:small;">
+      4 star:
+    </td>
+    <td id="td4" style="min-width:60;" width="60" align="left" bgcolor="#E8E8E8" title="">
+      <div id="div4" style="background-color:#FFCC33; height:13px; width:0%;"><span id="four_star_percentage" style="font-size:x-small;"></span></div></td>
+    <td align="right">&nbsp;<span id="four_star" style="font-size:small;"></span></td>
+  </tr>
+  <tr>
+    <td align="left" style="padding-right:0.5em;padding-bottom:1px;white-space:nowrap;font-size:small;">
+      3 star:
+    </td>
+    <td id="td3" style="min-width:60;" width="60" align="left" bgcolor="#E8E8E8" title="">
+      <div id="div3" style="background-color:#FFCC33; height:13px; width:0%;"><span id="three_star_percentage" style="font-size:x-small;"></span></div></td>
+    <td align="right">&nbsp;<span id="three_star" style="font-size:small;"></span></td>
+  </tr>
+  <tr>
+    <td align="left" style="padding-right:0.5em;padding-bottom:1px;white-space:nowrap;font-size:small;">
+      2 star:
+    </td>
+    <td id="td2" style="min-width:60;" width="60" align="left" bgcolor="#E8E8E8" title="">
+      <div id="div2" style="background-color:#FFCC33; height:13px; width:0%;"><span id="two_star_percentage" style="font-size:x-small;"></span></div></td>
+    <td align="right">&nbsp;<span id="two_star" style="font-size:small;"></span></td>
+  </tr>
+  <tr>
+    <td align="left" style="padding-right:0.5em;padding-bottom:1px;white-space:nowrap;font-size:small;">
+      1 star:
+    </td>
+    <td id="td1" style="min-width:60;" width="60" align="left" bgcolor="#E8E8E8" title="">
+      <div id="div1" style="background-color:#FFCC33; height:13px; width:0%;"><span id="one_star_percentage" style="font-size:x-small;"></span></div></td>
+    <td align="right">&nbsp;<span id="one_star" style="font-size:small;"></span></td>
+   </tr>
+  </table>
+  
+]]>
+</Content>
+</Module>
