@@ -17,13 +17,22 @@
 <p>
 <h1>Google Wave Gadget Emulator</h1>
 
-
 <div id="new">
+<div style="background-color: #ccddff; margin: 3px 3px 3px 3px;">
+<div style="margin: 3px 3px 3px 3px;">
+<p>
+Once you create a gadget instance, you can share the URL you are at with others to simulate them being on this wave. You will actually be all working on the same gadget instance!
+</p>
+
 <p>
 <b>Note:</b> This has only been tested successfully on Firefox so far.
 </p>
+</div>
+</div>
 
-URL to Gadget XML: <input id="gadget_url" style="width: 500px;"> <button id="create">Create Gadget</button>
+<hr>
+
+URL to Gadget XML: <input id="gadget_url" style="width: 500px;"> <button id="create">Create Gadget Instance</button>
 
 <p>
 Here are those that have been tested with this emulator (link creates new gadget):
@@ -37,7 +46,7 @@ Here are those that have been tested with this emulator (link creates new gadget
 <li>
 <a href='http://wave.thewe.net/emulator/#http://wave.thewe.net/gadgets/svg/svg-edit.xml'>A slightly modified version of Vidar's svg-edit</a>
 <li>
-<a href='http://wave.thewe.net/emulator2/#http://wave-api.appspot.com/public/gadgets/hellowave.xml'>Click Me</a>
+<a href='http://wave.thewe.net/emulator/#http://wave-api.appspot.com/public/gadgets/hellowave.xml'>Click Me</a>
 </li>
 <li>
 <a href='http://wave.thewe.net/emulator/#http://wave-api.appspot.com/public/gadgets/bidder.xml'>Bidder</a>
@@ -47,6 +56,8 @@ Here are those that have been tested with this emulator (link creates new gadget
 </li>
 </ul>
 </p>
+
+<hr>
 
 <p>
 Built by <a href="http://wave.thewe.net">Avital Oliver</a> using <a href="http://couchdb.org">CouchDB</a> for storage.
