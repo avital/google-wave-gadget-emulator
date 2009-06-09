@@ -1,7 +1,6 @@
 loaded = false
 
-loadGadget = function() {
-  var participantId = $random(0, 999999999)
+loadGadget = function(callback) {
   var gadgetHtmlPath = 'gadgets/?' + gadgetURL;
   var iframe = this
   loaded = true
@@ -17,7 +16,10 @@ loadGadget = function() {
         frameborder: 0,
         style: 'display: block; overflow: hidden;',
         width: '100%',
-        height: '500px'
+        height: '500px',
+        events: {
+          load: callback
+        }
       }).inject($('gadget'))
     },
     onFailure: function() { 
@@ -37,7 +39,7 @@ load = function() {
   }
   else if (hashCode.length == 1) {
     gadgetURL = window.location.hash.substring(1)
-    document.title = mainTitle + ' - Create new gadget from URL ' + gadgetURL
+    document.title = 'Create new gadget from URL ' + gadgetURL
     docId = $random(100000000, 999999999)
     window.location.hash = gadgetURL + '#' + docId
     return
@@ -45,11 +47,11 @@ load = function() {
   else {
     gadgetURL = hashCode[0]
     docId = hashCode[1]
-    document.title = mainTitle + ' - ' + gadgetURL + ' [' + docId + ']'
+    document.title = gadgetURL + ' [' + docId + ']'
   }
   
   $('new').setStyle('display', 'none')
-  loadGadget();
+  loadGadget(checkState)
 }
 
 lastHashCode = null
@@ -67,6 +69,13 @@ document.addEvent('domready', function() {
 
   $('create').addEvent('click', function() {
     window.location.hash = $('gadget_url').get('value') + '#' + $random(100000000, 999999999)
+  })
+
+  $('change').addEvent('click', function() {
+    participantId = $random(100000000, 999999999)
+    participantName = prompt('Enter name')
+    Cookie.write('wave-name', participantName)    
+    addMe()
   })
 
   checkHash.periodical(500)
