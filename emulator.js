@@ -1,26 +1,28 @@
 docId = null
 
 getJSON = function(url, callback, fullCallback) {
+  allCallbacks = function(obj) {
+    if (fullCallback)
+      fullCallback(obj)
+
+    if (callback) {
+      var rev = obj._rev
+      delete obj._rev       
+      delete obj._id
+      callback(obj, rev)
+    }
+  }
+    
   new Request.JSON({
     url: url,
     method: 'get',
-    onSuccess: function(obj) {
-      if (fullCallback)
-        fullCallback(obj)
-
-      if (callback) {
-        var rev = obj._rev
-        delete obj._rev
-        delete obj._id
-        callback(obj, rev)
-      }
-    },
+    onSuccess: allCallbacks,
     onFailure: function() {
       new Request.JSON({
         url: 'db/' + docId,
         method: 'PUT',
         data: '{}',
-        onSuccess: callback
+        onSuccess: checkState
       }).send()
     }
   }).send()
@@ -48,7 +50,7 @@ emulator = {
       for (var i in delta) {
         if (delta[i]) {
           state[i] = delta[i];
-       } else {
+        } else {
           delete state[i]
         }
       }
