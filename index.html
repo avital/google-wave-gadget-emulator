@@ -38,18 +38,18 @@ URL to Gadget XML: <input id="gadget_url" style="width: 500px;"> <button id="cre
 Here are those that have been tested with this emulator (link creates new gadget):
 <ul>
 <li>
-<a href='http://wave.thewe.net/emulator/#http://wave-api-dmo.appspot.com/public/fridge.xml'>Magnetic Poetry</a>
+<a href='#http://wave-api-dmo.appspot.com/public/fridge.xml'>Magnetic Poetry</a>
 </li>
 <li>
-<a href='http://wave.thewe.net/emulator/#http://blah.appspot.com/wave/sudoku/sudoku.xml'>Sudoku</a>
+<a href='#http://blah.appspot.com/wave/sudoku/sudoku.xml'>Sudoku</a>
 </li>
 <li>
-<a href='http://wave.thewe.net/emulator/#http://wave.thewe.net/gadgets/svg/svg-edit.xml'>A slightly modified version of Vidar's svg-edit</a>
+<a href='#http://wave.thewe.net/gadgets/svg/svg-edit.xml'>A slightly modified version of Vidar's svg-edit</a>
 <li>
-<a href='http://wave.thewe.net/emulator/#http://wave-api.appspot.com/public/gadgets/hellowave.xml'>Click Me</a>
+<a href='#http://wave-api.appspot.com/public/gadgets/hellowave.xml'>Click Me</a>
 </li>
 <li>
-<a href='http://wave.thewe.net/emulator/#http://wave-api.appspot.com/public/gadgets/bidder.xml'>Bidder</a>
+<a href='#http://wave-api.appspot.com/public/gadgets/bidder.xml'>Bidder</a>
 </li>
 <li>
 ...working on the other <a href='http://code.google.com/apis/wave/samples/index.html'>samples</a>
@@ -65,7 +65,14 @@ Inspired by Vidar Hokstad's <a href="http://www.hokstad.com/google-wave-gadget-e
 </p>
 </div>
 
-<div id="gadget">
+<div id="gadgetarea" style="display: none;">
+<div id="gadget" style="float: left; width: 50%">
+</div>
+<div id="statearea" style="width: 50%; float: right;">
+<h2>Gadget State</h2>
+<div id="state">
+</div>
+</div>
 </div>
 </body>
 </html>

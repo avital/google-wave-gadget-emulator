@@ -100,11 +100,18 @@ gadgets.rpc = {
 
 lastRev = null;
 
+stateHtml = function(state) {
+  return $H(state).map(function(value, key) { 
+    return '<p style="margin-bottom: 1px; margin-top: 3px;"><b>' + key + '</b>: ' + value + '</p>'
+  }).getValues().join('').replace(/,/g, ',<wbr>')
+}
+
 checkState = function() {
   if (docId) {
     getJSON('db/' + docId, function(state, rev) {
       if (rev != lastRev) {
         lastRev = rev
+        $('state').set('html', stateHtml(state))
         wave.receiveState_(state)
       }
     })

@@ -1,14 +1,18 @@
+loaded = false
+
 loadGadget = function() {
   var participantId = $random(0, 999999999)
   var gadgetHtmlPath = 'gadgets/?' + gadgetURL;
   var iframe = this
+  loaded = true
   
   new Request({
     url: gadgetHtmlPath, 
     method: 'get', 
     onSuccess: function(text) {
+      $('gadgetarea').setStyle('display', 'block')
       var frame = new IFrame({
-        id: 'gadget',
+        id: 'gadgetframe',
         src: gadgetHtmlPath,
         frameborder: 0,
         style: 'display: block; overflow: hidden;',
@@ -26,10 +30,9 @@ load = function() {
   var hashCode = window.location.hash.substring(1).split('#');
 
   if (hashCode == '') {
-    document.title = mainTitle
-    docId = null
-    $('new').setStyle('display', 'block')
-    $('gadget').empty()
+    if (loaded)
+      window.location.reload()
+
     return
   }
   else if (hashCode.length == 1) {
