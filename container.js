@@ -50,6 +50,8 @@ load = function() {
     document.title = gadgetURL + ' [' + docId + ']'
   }
   
+  $('source').set('href', gadgetURL)
+  
   $('new').setStyle('display', 'none')
   loadGadget(checkState)
 }

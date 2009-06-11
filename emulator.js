@@ -9,7 +9,7 @@ docId = null
 participantId = Cookie.read('wave-id') || $random(100000000, 999999999)
 Cookie.write('wave-id', participantId)
 
-participantName = Cookie.read('wave-name') || prompt('Enter name')
+participantName = Cookie.read('wave-name') || prompt('Enter name (as will appear on the gadget participant list)')
 Cookie.write('wave-name', participantName)
 
 getJSON = function(url, callback, fullCallback) {
