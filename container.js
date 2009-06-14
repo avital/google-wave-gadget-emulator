@@ -51,6 +51,7 @@ load = function() {
   }
   
   $('source').set('href', gadgetURL)
+  $('instance').set('href', '#' + gadgetURL)
   
   $('new').setStyle('display', 'none')
   loadGadget(checkState)

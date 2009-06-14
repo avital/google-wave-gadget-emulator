@@ -172,6 +172,6 @@ checkState = function() {
   }
 }
 
-checkState.periodical(6000)
+checkState.periodical(3000)
 
 
