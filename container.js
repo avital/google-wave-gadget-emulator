@@ -1,6 +1,8 @@
 loaded = false
 
-loadGadget = function(callback) {
+loadGadget = function(gadgetURL, callback) {
+  console.log('loadGadget')
+  
   var gadgetHtmlPath = 'gadgets/?' + gadgetURL;
   var iframe = this
   loaded = true
@@ -28,42 +30,54 @@ loadGadget = function(callback) {
   }).send()
 }
 
+realHash = function() {
+  return window.location.hash.substring(1)
+}
+
 load = function() {
-  var hashCode = window.location.hash.substring(1).split('#');
-
-  if (hashCode == '') {
-    if (loaded)
-      window.location.reload()
-
-    return
-  }
-  else if (hashCode.length == 1) {
-    gadgetURL = window.location.hash.substring(1)
-    document.title = 'Create new gadget from URL ' + gadgetURL
-    docId = $random(100000000, 999999999)
-    window.location.hash = gadgetURL + '#' + docId
+  console.log('load()')
+  
+  if (realHash().contains('#')) {
+    // old emulator hash scheme
+    window.location.replace('#' + realHash().replace('#', '!'))
     return
   }
   else {
-    gadgetURL = hashCode[0]
-    docId = hashCode[1]
-    document.title = gadgetURL + ' [' + docId + ']'
+    var hashCode = realHash().split('!');
+
+    console.log(hashCode)
+
+    if (hashCode == '') {
+      if (loaded)
+        window.location.reload()
+    }
+    else if (hashCode.length == 1) {
+      var gadgetURL = realHash()
+      var docId = $random(100000000, 999999999)
+      document.title = 'Create new gadget from URL ' + gadgetURL
+      window.location.replace(window.location.href + '!' + docId)
+    }
+    else {
+      var gadgetURL = hashCode[0]
+      var docId = hashCode[1]
+      document.title = gadgetURL + ' [' + docId + ']'
+      emulator.docURL = '/emulator/db/' + docId
+  
+      $('source').set('href', gadgetURL)
+      $('instance').set('href', '#' + gadgetURL)
+  
+      $('new').setStyle('display', 'none')
+      loadGadget(gadgetURL, emulator.checkState)
+    }
   }
-  
-  $('source').set('href', gadgetURL)
-  $('instance').set('href', '#' + gadgetURL)
-  
-  $('new').setStyle('display', 'none')
-  loadGadget(checkState)
 }
 
 lastHashCode = null
 
 checkHash = function() {
-  var hashCode = window.location.hash.substring(1)
-  if (lastHashCode != hashCode) {
+  if (lastHashCode != realHash()) {
+    lastHashCode = realHash()
     load() 
-    lastHashCode = hashCode
   }
 }
 
@@ -71,7 +85,7 @@ document.addEvent('domready', function() {
   mainTitle = document.title
 
   $('create').addEvent('click', function() {
-    window.location.hash = $('gadget_url').get('value') + '#' + $random(100000000, 999999999)
+    window.location.hash = $('gadget_url').get('value') + '%' + $random(100000000, 999999999)
   })
 
   $('change').addEvent('click', function() {
