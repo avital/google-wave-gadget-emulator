@@ -104,7 +104,7 @@ emulator = {
       
       obj.a_participants[emulator.participantId] = {
         id: emulator.participantId, 
-        displayName: participantName,
+        displayName: emulator.participantName,
         thumbnailUrl: 'http://gadget-doc-examples.googlecode.com/svn/trunk/images/unknown.gif'
       }
     }, emulator.checkState)
