@@ -14,7 +14,7 @@ emulator = {
     emulator.participantName = Cookie.read('wave-name') || prompt('Enter name (as will appear on the gadget participant list)')
     Cookie.write('wave-name', emulator.participantName)
 
-    emulator.checkState.periodical(3000)
+    emulator.checkState.periodical(6000)
   },
 
   getJSON: function(url, callback, fullCallback) {
@@ -127,8 +127,8 @@ emulator = {
       emulator.getJSON(emulator.docURL, function(state, rev, participants) {
         if (rev != emulator.lastRev) {
           emulator.lastRev = rev
-          $('state').set('html', emulator.stateHtml(state))
-          $('participants').set('html', emulator.participantHtml(participants))
+          $$('#state').set('html', emulator.stateHtml(state))
+          $$('#participants').set('html', emulator.participantHtml(participants))
           wave.receiveState_(state)
           emulator.addParticipant(participants)
         }
@@ -179,4 +179,7 @@ gadgets.rpc = {
    
 emulator.init()
 
+
+window.top.emulator = emulator
+window.top.gadgets = gadgets
 

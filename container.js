@@ -63,10 +63,10 @@ load = function() {
       document.title = gadgetURL + ' [' + docId + ']'
       emulator.docURL = '/emulator/db/' + docId
   
-      $('source').set('href', gadgetURL)
-      $('instance').set('href', '#' + gadgetURL)
+      $$('#source').set('href', gadgetURL)
+      $$('#instance').set('href', '#' + gadgetURL)
   
-      $('new').setStyle('display', 'none')
+      $$('#new').setStyle('display', 'none')
       loadGadget(gadgetURL, emulator.checkState)
     }
   }
@@ -84,15 +84,15 @@ checkHash = function() {
 document.addEvent('domready', function() {
   mainTitle = document.title
 
-  $('create').addEvent('click', function() {
+  $$('#create').addEvent('click', function() {
     window.location.hash = $('gadget_url').get('value') + '%' + $random(100000000, 999999999)
   })
 
-  $('change').addEvent('click', function() {
-    participantId = $random(100000000, 999999999)
-    participantName = prompt('Enter name')
-    Cookie.write('wave-name', participantName)    
-    addMe()
+  $$('#change').addEvent('click', function() {
+    emulator.participantId = $random(100000000, 999999999)
+    emulator.participantName = prompt('Enter name')
+    Cookie.write('wave-name', emulator.participantName)    
+    emulator.addMe()
   })
 
   checkHash.periodical(500)

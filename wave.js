@@ -187,3 +187,5 @@ f = function() {
   })
 }()*/
 
+window.top.wave = wave
+
