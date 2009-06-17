@@ -85,7 +85,7 @@ document.addEvent('domready', function() {
   mainTitle = document.title
 
   $$('#create').addEvent('click', function() {
-    window.location.hash = $('gadget_url').get('value') + '%' + $random(100000000, 999999999)
+    window.location.hash = $('gadget_url').get('value')
   })
 
   $$('#change').addEvent('click', function() {
